@@ -19,5 +19,16 @@ module Concerned
       raise "No module could be found for: #{concern_ns} or #{const_name}"
     end
 
+    def extend_enable!
+      @extend_enabled = true
+    end
+
+    def extend_disable!
+      @extend_enabled = false
+    end
+
+    def extend_enabled?
+      @extend_enabled
+    end
   end
 end

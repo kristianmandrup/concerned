@@ -8,6 +8,13 @@ class Module
     shared_concerns([options[:shared]].flatten.compact)
   end
 
+  def shared_concerns(*concerns)
+    concerns.flatten.each do |concern|
+      next if concern.blank?
+      Concerned.require_shared concern
+    end
+  end
+
   def include_concerns(*concerns)
     options = concerns.extract_options!
     concerns.flatten.each do |concern|
@@ -15,19 +22,15 @@ class Module
       require_concern name, concern
       concern_ns = [name, concern.to_s.camelize].join('::')
       self.send :include, concern_ns.constantize
-      begin
-        self.extend [concern_ns, 'ClassMethods'].join('::').constantize
-      rescue
+
+      if Concerned.extend_enabled?
+        begin
+          self.extend [concern_ns, 'ClassMethods'].join('::').constantize
+        rescue
+        end
       end
     end
     include_shared_concerns([options[:shared]].flatten.compact)
-  end
-
-  def shared_concerns(*concerns)
-    concerns.flatten.each do |concern|
-      next if concern.blank?
-      Concerned.require_shared concern
-    end
   end
 
   def include_shared_concerns(*concerns)
@@ -38,9 +41,11 @@ class Module
 
       self.send :include, Concerned.shared_const(concern_ns)
 
-      begin
-        self.extend [concern_ns, 'ClassMethods'].join('::').constantize
-      rescue
+      if Concerned.extend_enabled?
+        begin
+          self.extend [concern_ns, 'ClassMethods'].join('::').constantize
+        rescue
+        end
       end
     end
   end

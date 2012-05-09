@@ -17,8 +17,8 @@ Jeweler::Tasks.new do |gem|
   gem.name = "concerned"
   gem.homepage = "http://github.com/kristianmandrup/concerned"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.summary = %Q{Concerns for Ruby (and Rails) projects}
+  gem.description = %Q{Makes it easy to apply the concerns pattern in any Ruby context}
   gem.email = "kmandrup@gmail.com"
   gem.authors = ["Kristian Mandrup"]
   # dependencies defined in Gemfile
