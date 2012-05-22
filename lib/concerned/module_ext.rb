@@ -53,6 +53,7 @@ class Module
   alias_method :shared_concern, :shared_concerns
   alias_method :include_concern, :include_concerns
   alias_method :include_shared_concern, :include_shared_concerns
+  alias_method :include_shared, :include_shared_concerns
 
   protected
 
