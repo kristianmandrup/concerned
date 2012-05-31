@@ -15,6 +15,24 @@ class FixtureUser
   include_concerns :validations
 end
 
+class FixtureUserNoMeta  
+  concerned_with :scopes, :validations
+  shared_concerns :associations
+  include_shared_concerns :caching
+  include_concerns :validations
+end
+
+
+describe "Concerned" do
+  describe "no meta" do
+    it 'should not have meta info' do
+      FixtureUserNoMeta.should_not respond_to(:my_concerns)
+      FixtureUserNoMeta.should_not respond_to(:my_shared_concerns)
+      FixtureUserNoMeta.should_not respond_to(:all_my_concerns)
+    end
+  end 
+end
+
 describe "Concerned" do
   describe "#concerned_with" do
     it 'should require files from #{name.underscore}/#{concern}' do

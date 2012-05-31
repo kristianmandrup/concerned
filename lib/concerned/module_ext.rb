@@ -55,7 +55,7 @@ class Module
     end
 
     class_eval do
-      self.my_shared_concerns += concerns.flatten if self.respond_to?(:shared_concerns)
+      self.my_shared_concerns += concerns.flatten if self.respond_to?(:my_shared_concerns)
     end    
   end
 
