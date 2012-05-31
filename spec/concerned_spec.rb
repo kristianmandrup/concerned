@@ -7,9 +7,12 @@ require 'active_support/dependencies'
 $:.unshift File.dirname __FILE__
 
 class FixtureUser
+  include Concerned
+
   concerned_with :scopes, :validations
   shared_concerns :associations
   include_shared_concerns :caching
+  include_concerns :validations
 end
 
 describe "Concerned" do
@@ -18,6 +21,10 @@ describe "Concerned" do
       [:scopes, :validations].each do |concern|
         FixtureUser.new.should respond_to("method_from_#{concern}_concern")
       end
+
+      FixtureUser.my_concerns.should include(:validations)
+      FixtureUser.my_shared_concerns.should include(:caching)
+      FixtureUser.all_my_concerns.should include(:caching, :validations)
     end
   end 
    

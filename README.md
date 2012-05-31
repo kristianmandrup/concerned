@@ -46,6 +46,24 @@ class Project
 end
 ```
 
+## Concerns currently included
+
+You can now include the Concerned module in your class or module and get acces to the meta-info: which concerns are currently included
+
+```ruby
+class FixtureUser
+  include Concerned
+  include_concerns :scopes, :validations 
+  include_shared_concerns :caching 
+end
+```
+
+```ruby
+FixtureUser.my_concerns # => [:scopes, :validations]
+FixtureUser.my_shared_concerns # => [:caching]
+FixtureUser.all_my_shared_concerns # => [:scopes, :validations, :caching]
+```
+
 ## Global config
 
 You can use the `Concerned.extend_enable!` to let the concern helpers also attempt to extend the host module/class with the ClassMethods module of the concerns module (if such exists). Disable it by using: `Concerned.extend_disable!`

@@ -30,6 +30,11 @@ class Module
         end
       end
     end
+          
+    class_eval do
+      self.my_concerns += concerns.flatten if self.respond_to?(:my_concerns)
+    end
+
     include_shared_concerns([options[:shared]].flatten.compact)
   end
 
@@ -48,6 +53,10 @@ class Module
         end
       end
     end
+
+    class_eval do
+      self.my_shared_concerns += concerns.flatten if self.respond_to?(:shared_concerns)
+    end    
   end
 
   alias_method :shared_concern, :shared_concerns
