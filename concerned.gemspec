@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = "concerned"
-  s.version = "0.1.2"
+  s.version = "0.1.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Kristian Mandrup"]
@@ -31,6 +31,8 @@ Gem::Specification.new do |s|
     "spec/concerned_spec.rb",
     "spec/fixture_user/scopes.rb",
     "spec/fixture_user/validations.rb",
+    "spec/fixture_user_no_meta/scopes.rb",
+    "spec/fixture_user_no_meta/validations.rb",
     "spec/shared/associations.rb",
     "spec/shared/caching.rb",
     "spec/spec_helper.rb"
