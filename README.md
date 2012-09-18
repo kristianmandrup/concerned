@@ -64,6 +64,18 @@ FixtureUser.my_shared_concerns # => [:caching]
 FixtureUser.all_my_shared_concerns # => [:scopes, :validations, :caching]
 ```
 
+You can even include concerns from another scope
+
+```ruby
+class FixtureUserFor
+  include Concerned
+  include_concerns :scopes, :validations, for: 'FixtureUser'
+  include_shared_concerns :caching 
+end
+```
+
+Will include the `FixtureUser::Scopes` and `FixtureUser::Validations` into `FixtureUserFor` :)
+
 ## Global config
 
 You can use the `Concerned.extend_enable!` to let the concern helpers also attempt to extend the host module/class with the ClassMethods module of the concerns module (if such exists). Disable it by using: `Concerned.extend_disable!`

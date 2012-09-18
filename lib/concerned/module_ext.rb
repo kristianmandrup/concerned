@@ -17,10 +17,13 @@ class Module
 
   def include_concerns(*concerns)
     options = concerns.extract_options!
+    scope_name = options[:for] ? options[:for] : name
     concerns.flatten.each do |concern|
       next if concern.blank?
-      require_concern name, concern
-      concern_ns = [name, concern.to_s.camelize].join('::')
+      require_concern scope_name, concern
+
+      concern_ns ||= [scope_name.to_s.camelize, concern.to_s.camelize].join('::')
+
       self.send :include, concern_ns.constantize
 
       if Concerned.extend_enabled?

@@ -22,6 +22,17 @@ class FixtureUserNoMeta
   include_concerns :validations
 end
 
+class FixtureUserFor
+  include_concerns :foo, for: 'fixture_user' 
+end
+
+describe "Concerned" do
+  describe "using :for" do
+    it 'should include Foo module' do
+      FixtureUserFor.new.should respond_to(:foo)    
+    end
+  end 
+end
 
 describe "Concerned" do
   describe "no meta" do
