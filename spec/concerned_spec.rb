@@ -26,10 +26,27 @@ class FixtureUserFor
   include_concerns :foo, for: 'fixture_user' 
 end
 
+class FixtureUserFrom
+  include_concerns :bar, from: 'fixture_user' 
+end
+
+
+describe 'shared concerns' do
+  it 'should require it' do
+    expect(Assoc.abc).to be true
+  end  
+end
+
 describe "Concerned" do
   describe "using :for" do
     it 'should include Foo module' do
       FixtureUserFor.new.should respond_to(:foo)    
+    end
+  end 
+
+  describe "using :from" do
+    it 'should include Foo module' do
+      FixtureUserFrom.new.should respond_to(:bar)    
     end
   end 
 end

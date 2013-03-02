@@ -17,7 +17,7 @@ class Module
 
   def include_concerns(*concerns)
     options = concerns.extract_options!
-    scope_name = options[:for] ? options[:for] : name
+    scope_name = options[:for] || options[:from] || name
     concerns.flatten.each do |concern|
       next if concern.blank?
       require_concern scope_name, concern

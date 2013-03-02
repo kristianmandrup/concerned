@@ -1,1 +1,5 @@
-puts "shared/associations was required ok"
+module Assoc
+  def self.abc 
+    true
+  end
+end
