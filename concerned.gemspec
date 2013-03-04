@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "concerned"
-  s.version = "0.1.5"
+  s.version = "0.1.6"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Kristian Mandrup"]
-  s.date = "2013-03-02"
+  s.date = "2013-03-04"
   s.description = "Makes it easy to apply the concerns pattern in any Ruby context"
   s.email = "kmandrup@gmail.com"
   s.extra_rdoc_files = [

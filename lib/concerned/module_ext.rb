@@ -70,7 +70,7 @@ class Module
   protected
 
   def require_concern name, concern
-    require_method "#{name.underscore}/#{concern.to_s.underscore}"
+    require_method "#{name.to_s.underscore}/#{concern.to_s.underscore}"
   end 
 
   def require_method path

@@ -63,7 +63,7 @@ end
 
 describe "Concerned" do
   describe "#concerned_with" do
-    it 'should require files from #{name.underscore}/#{concern}' do
+    it 'should require files from #{name.to_s.underscore}/#{concern}' do
       [:scopes, :validations].each do |concern|
         FixtureUser.new.should respond_to("method_from_#{concern}_concern")
       end

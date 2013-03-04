@@ -1,4 +1,4 @@
-source 'https://www.rubygems.org'
+source "http://rubygems.org"
 
 group :test do
   gem 'rails', '>= 3.0.8'
