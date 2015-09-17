@@ -1,8 +1,10 @@
-# Concerned
+Concerned
+=========
 
 Use the "concerns" pattern in any Ruby or Rails project.
 
-## Rails 3
+Rails 3
+-------
 
 In Gemfile:
 
@@ -10,18 +12,15 @@ In Gemfile:
 
 ### Usage
 
-This gem comes with the following three helpers, that are added to `Module`.
-To require concern modules (or classes)
+This gem comes with the following three helpers, that are added to `Module`. To require concern modules (or classes)
 
-* concerned_with
-* shared_concerns
+-	concerned_with
+-	shared_concerns
 
 And to include concern modules
 
-* include_concerns
-* include_shared_concerns
-
-The `concerned_with` helper method expects to find a module or class matching the current namespace, fx the following will include `FixtureUser::Scopes` and `FixtureUser::Validations` into `FixtureUser`.
+-	include_concerns
+-	include_shared_concerns
 
 ```ruby
 class FixtureUser
@@ -29,7 +28,23 @@ class FixtureUser
 end
 ```
 
-The `include_shared_concerns` expects to find a module in a `shared` folder somewhere in the _load path_ that has a name of either `Caching` or `Shared::Caching` for the following example:
+The `include_concerns` helper method can be made to find a module or class matching the current namespace, using the `ns` option. The following will include `FixtureUser::Scopes` and `FixtureUser::Validations` into `FixtureUser`.
+
+```ruby
+class FixtureUser
+  include_concerns :scopes, :validations, ns: true
+end
+```
+
+You can specify a specific namespace by using `ns`, `for` or `from` with a string indicicating the namespace (will be camelized).
+
+```ruby
+class FixtureUser
+  include_concerns :scopes, :validations, from: 'Fixture'
+end
+```
+
+The `include_shared_concerns` expects to find a module in a `shared` folder somewhere in the *load path* that has a name of either `Caching` or `Shared::Caching` for the following example:
 
 ```ruby
 class FixtureUser
@@ -46,15 +61,16 @@ class Project
 end
 ```
 
-## Concerns currently included
+Concerns currently included
+---------------------------
 
 You can now include the Concerned module in your class or module and get acces to the meta-info: which concerns are currently included
 
 ```ruby
 class FixtureUser
   include Concerned
-  include_concerns :scopes, :validations 
-  include_shared_concerns :caching 
+  include_concerns :scopes, :validations
+  include_shared_concerns :caching
 end
 ```
 
@@ -70,35 +86,35 @@ You can even include concerns from another scope
 class FixtureUserFor
   include Concerned
   include_concerns :scopes, :validations, for: 'FixtureUser'
-  include_shared_concerns :caching 
+  include_shared_concerns :caching
 end
 ```
 
 Will include the `FixtureUser::Scopes` and `FixtureUser::Validations` into `FixtureUserFor` :)
 
-## Global config
+Global config
+-------------
 
 You can use the `Concerned.extend_enable!` to let the concern helpers also attempt to extend the host module/class with the ClassMethods module of the concerns module (if such exists). Disable it by using: `Concerned.extend_disable!`
 
-Use `Concerned.extend_enabled?` to see if it is currently enabled or not.
-By default this feature is turned off. 
+Use `Concerned.extend_enabled?` to see if it is currently enabled or not. By default this feature is turned off.
 
-It is usually better to use `ActionSupport::Concern` using `extend ActiveSupport::Concern`. 
+It is usually better to use `ActionSupport::Concern` using `extend ActiveSupport::Concern`.
 
 See fx [concerns](http://www.fakingfantastic.com/2010/09/20/concerning-yourself-with-active-support-concern/)
 
-## Contributing to concerned
- 
-* Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet.
-* Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it.
-* Fork the project.
-* Start a feature/bugfix branch.
-* Commit and push until you are happy with your contribution.
-* Make sure to add tests for it. This is important so I don't break it in a future version unintentionally.
-* Please try not to mess with the Rakefile, version, or history. If you want to have your own version, or is otherwise necessary, that is fine, but please isolate to its own commit so I can cherry-pick around it.
+Contributing to concerned
+-------------------------
 
-## Copyright
+-	Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet.
+-	Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it.
+-	Fork the project.
+-	Start a feature/bugfix branch.
+-	Commit and push until you are happy with your contribution.
+-	Make sure to add tests for it. This is important so I don't break it in a future version unintentionally.
+-	Please try not to mess with the Rakefile, version, or history. If you want to have your own version, or is otherwise necessary, that is fine, but please isolate to its own commit so I can cherry-pick around it.
 
-Copyright (c) 2012 Kristian Mandrup. See LICENSE.txt for
-further details.
+Copyright
+---------
 
+Copyright (c) 2012 Kristian Mandrup. See LICENSE.txt for further details.

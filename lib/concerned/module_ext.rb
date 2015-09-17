@@ -3,7 +3,11 @@ class Module
     options = concerns.extract_options!
     concerns.flatten.each do |concern|
       next if concern.blank?
-      require_concern name, concern
+      if options[:require]
+        require_concern name, concern
+      else
+        include_concern name, concern
+      end
     end
     shared_concerns([options[:shared]].flatten.compact)
   end
@@ -17,12 +21,18 @@ class Module
 
   def include_concerns(*concerns)
     options = concerns.extract_options!
-    scope_name = options[:for] || options[:from] || name
+    scope_name = name if options[:ns] == true
+    scope_name ||= options[:for] || options[:from] || options[:ns]
+
     concerns.flatten.each do |concern|
       next if concern.blank?
-      require_concern scope_name, concern
+      require_concern scope_name, concern if options[:require]
 
-      concern_ns ||= [scope_name.to_s.camelize, concern.to_s.camelize].join('::')
+      concern_ns ||= if scope_name
+         [scope_name.to_s.camelize, concern.to_s.camelize].join('::')
+      else
+        concern.to_s.camelize
+      end
 
       self.send :include, concern_ns.constantize
 
@@ -33,7 +43,7 @@ class Module
         end
       end
     end
-          
+
     class_eval do
       self.my_concerns += concerns.flatten if self.respond_to?(:my_concerns)
     end
@@ -59,7 +69,7 @@ class Module
 
     class_eval do
       self.my_shared_concerns += concerns.flatten if self.respond_to?(:my_shared_concerns)
-    end    
+    end
   end
 
   alias_method :shared_concern, :shared_concerns
@@ -71,7 +81,7 @@ class Module
 
   def require_concern name, concern
     require_method "#{name.to_s.underscore}/#{concern.to_s.underscore}"
-  end 
+  end
 
   def require_method path
     defined?(require_dependency) ? require_dependency(path) : require(path)

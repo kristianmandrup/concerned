@@ -6,6 +6,9 @@ require 'active_support/dependencies'
 # The same procedure as one that needed for common #require - It should know path.
 $:.unshift File.dirname __FILE__
 
+require 'fixture_user/scopes'
+require 'fixture_user/validations'
+
 class FixtureUser
   include Concerned
 
@@ -15,7 +18,7 @@ class FixtureUser
   include_concerns :validations
 end
 
-class FixtureUserNoMeta  
+class FixtureUserNoMeta
   concerned_with :scopes, :validations
   shared_concerns :associations
   include_shared_concerns :caching
@@ -23,32 +26,32 @@ class FixtureUserNoMeta
 end
 
 class FixtureUserFor
-  include_concerns :foo, for: 'fixture_user' 
+  include_concerns :foo, for: 'fixture_user'
 end
 
 class FixtureUserFrom
-  include_concerns :bar, from: 'fixture_user' 
+  include_concerns :bar, from: 'fixture_user'
 end
 
 
 describe 'shared concerns' do
   it 'should require it' do
     expect(Assoc.abc).to be true
-  end  
+  end
 end
 
 describe "Concerned" do
   describe "using :for" do
     it 'should include Foo module' do
-      FixtureUserFor.new.should respond_to(:foo)    
+      FixtureUserFor.new.should respond_to(:foo)
     end
-  end 
+  end
 
   describe "using :from" do
     it 'should include Foo module' do
-      FixtureUserFrom.new.should respond_to(:bar)    
+      FixtureUserFrom.new.should respond_to(:bar)
     end
-  end 
+  end
 end
 
 describe "Concerned" do
@@ -58,7 +61,7 @@ describe "Concerned" do
       FixtureUserNoMeta.should_not respond_to(:my_shared_concerns)
       FixtureUserNoMeta.should_not respond_to(:all_my_concerns)
     end
-  end 
+  end
 end
 
 describe "Concerned" do
@@ -72,8 +75,8 @@ describe "Concerned" do
       FixtureUser.my_shared_concerns.should include(:caching)
       FixtureUser.all_my_concerns.should include(:caching, :validations)
     end
-  end 
-   
+  end
+
   describe "#include_shared_concerns" do
     it 'should require and include from shared/#{concern}' do
       FixtureUser.new.should respond_to("method_from_shared_concern")
